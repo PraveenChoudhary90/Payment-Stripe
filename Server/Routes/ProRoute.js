@@ -1,14 +1,30 @@
 const express = require("express");
 const route = express.Router();
-const ProController = require("../Controller/ProModel");
+const multer = require('multer');
+const path = require('path');
+const ProController = require("../Controller/ProController");
 
 
 
 
 
+// Configure storage engine and filename
+const storage = multer.diskStorage({
+  destination: './uploads/',
+  filename: function(req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
 
-route.post("/insert", ProController.InsertData);
+// Initialize upload middleware and add file size limit
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 } // 1MB file size limit
+}) // 'myFile' is the name attribute of the file input field
 
+
+route.post("/insert",upload.array('image'), ProController.InsertData);
+route.get("/display", ProController.Display);
 
 
 

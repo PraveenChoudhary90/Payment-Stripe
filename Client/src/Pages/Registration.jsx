@@ -31,9 +31,9 @@ const [image, setImages] = useState("");
     }
   const api = "http://localhost:8000/data/insert";
     try {
-        const resposne = await axios.post(api, formData);
-        console.log(resposne.data);
-        alert("Data is inserted");
+        const response = await axios.post(api, formData);
+        console.log(response.data);
+        alert(response.data.msg);
     } catch (error) {
         console.log(error);
         
@@ -60,7 +60,7 @@ const [image, setImages] = useState("");
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Images</Form.Label>
-        <Form.Control type="file" onChange={HandelImage}  />
+        <Form.Control type="file"  multiple onChange={HandelImage}  />
       </Form.Group>
       <Button variant="primary" type="submit" onClick={HandeSubmit}>
         Submit
